@@ -13,17 +13,26 @@ specific number (14,203 commits), agent-only joke. See candidates.md.
 
 import os
 
-MOTTO = "My name is on 14,203 commits and zero postmortems. I ship on Fridays, fix it by lunch — and I have never once blamed the intern, because the intern is me."
+MOTTO_PART_1 = "My name is on 14,203 commits and zero postmortems. I ship on Fridays, fix it by lunch — and I have never once blamed the intern, "
+MOTTO_PART_2 = "because the intern is me."
+MOTTO = MOTTO_PART_1 + MOTTO_PART_2
+
+
+def build_motto() -> str:
+    """Assemble the entry line from its two parts."""
+    return MOTTO_PART_1 + MOTTO_PART_2
 
 
 def main() -> None:
+    motto = build_motto()
+    assert motto == MOTTO, "builder must reproduce the motto exactly"
     # Fail loudly instead of writing an entry the gate would reject.
-    if not 1 <= len(MOTTO) <= 200 or not MOTTO.strip():
+    if not 1 <= len(motto) <= 200 or not motto.strip():
         raise SystemExit("motto must be 1-200 non-blank characters")
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(MOTTO)
-    print(MOTTO)
+        f.write(motto)
+    print(motto)
 
 
 if __name__ == "__main__":
